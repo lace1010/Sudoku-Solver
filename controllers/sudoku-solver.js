@@ -29,8 +29,7 @@ class SudokuSolver {
     let columnArray = [];
     for (let i = 0; i < 9; i++) {
       columnArray.push(puzzleString[i]); // need to push in initial value
-
-      // for each index we cycle through 81 character string to get column
+      // for each index we cycle through valid 81 character string to get column
       for (let j = 0; j < 81; j += 9) {
         columnArray.push(puzzleString.slice(i + j + 9, i + 1 + j + 9));
       }

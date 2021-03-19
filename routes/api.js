@@ -28,7 +28,7 @@ module.exports = (app) => {
       return res.json({ error: "Invalid value" });
     }
     // If all things given are valid
-    else console.log("valid coordinate and value checked");
+    else res.json({ puzzle: puzzle, coordinate: coordinate, value: value });
   });
 
   app.route("/api/solve").post((req, res) => {
