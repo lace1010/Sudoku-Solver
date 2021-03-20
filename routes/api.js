@@ -41,27 +41,32 @@ module.exports = (app) => {
     if (validateResponse) return res.json(validateResponse);
     else console.log("correct length and characters");
 
-    // Begin working on solving sudoku
-    let rows = solver.checkRowPlacement(puzzle);
-    if (rows.length == 9) console.log("correct rows");
-    else {
-      console.log("row has a double");
+    // Create arrays with all forms of sudoku needed.
+    let filteredRowArray = solver.filterColumn(puzzle);
+    if (!filteredRowArray) {
       return res.json({ error: "Puzzle cannot be solved" });
-    }
+    } else console.log("correct rows");
 
-    let columns = solver.checkColPlacement(puzzle);
-    if (columns.length == 9) console.log("correct columns");
-    else {
-      console.log("column has a double");
+    let filteredColumnArray = solver.filterColumn(puzzle);
+    if (!filteredColumnArray) {
       return res.json({ error: "Puzzle cannot be solved" });
-    }
+    } else console.log("correct columns");
 
     // Check region placement
-    let regions = solver.checkRegionPlacement(puzzle);
-    if (regions.length == 9) console.log("correct regions");
-    else {
-      console.log("region has a double");
+    let filteredRegionArray = solver.filterRegion(puzzle);
+    if (!filteredRegionArray) {
       return res.json({ error: "Puzzle cannot be solved" });
-    }
+    } else console.log("correct regions");
+
+    /* 
+    
+    *** SIMPLY FILTERING THE STRING INTO CERTAIN ARRAYS *** 
+    
+    */
+    console.log(filteredRowArray, "<=filteredRowArray");
+    console.log(filteredColumnArray, "<=filteredColumnArray");
+    console.log(filteredRegionArray, "<=filteredRegionArray");
+
+    let solve = solver.solve(puzzle);
   });
 };

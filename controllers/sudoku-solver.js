@@ -1,17 +1,5 @@
 class SudokuSolver {
-  validate(puzzleString) {
-    let notNumberOrPeriodRegex = /[^\.0-9]/;
-    // Add invalid characters condition
-    if (notNumberOrPeriodRegex.test(puzzleString)) {
-      return { error: "Invalid characters in puzzle" };
-    } else if (puzzleString.length !== 81) {
-      return {
-        error: "Expected puzzle to be 81 characters long",
-      };
-    }
-  }
-
-  checkRowPlacement(puzzleString, row, column, value) {
+  filterRowArray(puzzleString) {
     let doubleNumberRegex = /([1-9]).*\1/;
     // split string up into 9 rows using regex and match
     let puzzleArrayInRows = puzzleString.match(/.{9}/g);
@@ -19,11 +7,10 @@ class SudokuSolver {
     let filterdRowArray = puzzleArrayInRows.filter((i) => {
       return !doubleNumberRegex.test(i);
     });
-
-    return filterdRowArray;
+    if (filteredRowArray.length == 9) return filterdRowArray;
   }
 
-  checkColPlacement(puzzleString, row, column, value) {
+  filterColumn(puzzleString) {
     let doubleNumberRegex = /([1-9]).*\1/;
     let puzzleArrayInColumns = [];
     let columnArray = [];
@@ -41,10 +28,11 @@ class SudokuSolver {
     let filteredColumnArray = puzzleArrayInColumns.filter((i) => {
       return !doubleNumberRegex.test(i);
     });
-    return filteredColumnArray;
+
+    if (filteredColumnArray.length == 9) return filteredColumnArray;
   }
 
-  checkRegionPlacement(puzzleString, row, column, value) {
+  filterRegion(puzzleString) {
     let doubleNumberRegex = /([1-9]).*\1/;
     let splitArrayInThree = puzzleString.match(/.{3}/g);
     let puzzleArray = [];
@@ -82,7 +70,7 @@ class SudokuSolver {
       puzzleArrayInRegionsSplit.push(puzzleArray.slice(i * 3, (i + 1) * 3));
     }
 
-    // Map through each region and join the three split mini regions to form whole regions.
+    // Map through each region and join the three split mini regions to form the 9 whole regions.
     let puzzleArrayInRegions = puzzleArrayInRegionsSplit.map((item) => {
       return item.join("");
     });
@@ -93,8 +81,31 @@ class SudokuSolver {
     });
 
     // Return the filtered array and handle it with condition statement in api.js in route("/api/solve")
-    return filteredRegionArray;
+    if (filteredRegionArray.length == 9) return filteredRegionArray;
   }
+
+  validate(puzzleString) {
+    let notNumberOrPeriodRegex = /[^\.0-9]/;
+    // Add invalid characters condition
+    if (notNumberOrPeriodRegex.test(puzzleString)) {
+      return { error: "Invalid characters in puzzle" };
+    } else if (puzzleString.length !== 81) {
+      return {
+        error: "Expected puzzle to be 81 characters long",
+      };
+    }
+  }
+
+  checkRowPlacement(puzzleString, row, column, value) {
+    console.log(puzzleString, "<= puzzleString");
+    console.log(row, "<= row");
+    console.log(column, "<= column");
+    console.log(value, "<= value");
+  }
+
+  checkColPlacement(puzzleString, row, column, value) {}
+
+  checkRegionPlacement(puzzleString, row, column, value) {}
 
   solve(puzzleString) {}
 }
