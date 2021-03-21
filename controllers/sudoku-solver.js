@@ -1,13 +1,25 @@
 class SudokuSolver {
-  filterRowArray(puzzleString) {
+  validate(puzzleString) {
+    let notNumberOrPeriodRegex = /[^\.0-9]/;
+    // Add invalid characters condition
+    if (notNumberOrPeriodRegex.test(puzzleString)) {
+      return { error: "Invalid characters in puzzle" };
+    } else if (puzzleString.length !== 81) {
+      return {
+        error: "Expected puzzle to be 81 characters long",
+      };
+    }
+  }
+
+  filterRow(puzzleString) {
     let doubleNumberRegex = /([1-9]).*\1/;
     // split string up into 9 rows using regex and match
     let puzzleArrayInRows = puzzleString.match(/.{9}/g);
 
-    let filterdRowArray = puzzleArrayInRows.filter((i) => {
+    let filteredRowArray = puzzleArrayInRows.filter((i) => {
       return !doubleNumberRegex.test(i);
     });
-    if (filteredRowArray.length == 9) return filterdRowArray;
+    if (filteredRowArray.length == 9) return filteredRowArray;
   }
 
   filterColumn(puzzleString) {
@@ -84,22 +96,12 @@ class SudokuSolver {
     if (filteredRegionArray.length == 9) return filteredRegionArray;
   }
 
-  validate(puzzleString) {
-    let notNumberOrPeriodRegex = /[^\.0-9]/;
-    // Add invalid characters condition
-    if (notNumberOrPeriodRegex.test(puzzleString)) {
-      return { error: "Invalid characters in puzzle" };
-    } else if (puzzleString.length !== 81) {
-      return {
-        error: "Expected puzzle to be 81 characters long",
-      };
-    }
-  }
-
   checkRowPlacement(puzzleString, row, column, value) {
-    console.log(puzzleString, "<= puzzleString");
+    console.log(puzzleString);
     console.log(row, "<= row");
+    console.log(row[2], "<= row[2]");
     console.log(column, "<= column");
+    console.log(column[2], "<= column[2]");
     console.log(value, "<= value");
   }
 
@@ -107,7 +109,104 @@ class SudokuSolver {
 
   checkRegionPlacement(puzzleString, row, column, value) {}
 
-  solve(puzzleString) {}
+  solve(puzzleString) {
+    // Set up a function that replaces the . string with a value that can fill in sudoku spot correctly
+    const replaceAt = (string, index, replacement) => {
+      return (
+        string.substring(0, index) + replacement + string.substring(index + 1)
+      );
+    };
+
+    let originalString = puzzleString;
+    let newPuzzleStringAfterAdding = [];
+    let froArray = [];
+    let fcArray = [];
+    let freArray = [];
+    let previousIndexAddOne;
+    let k = 2;
+
+    for (let i = 0; i < originalString.length; i++) {
+      console.log(i, "index before conditions BEFORE");
+      console.log(puzzleString, "puzzleString before condition BEFORE");
+      console.log(
+        newPuzzleStringAfterAdding[i],
+        "<= newPuzzleStringAfterAdding[i] BEFORE"
+      );
+      console.log(
+        parseInt(puzzleString[i]) + 1,
+        "parseInt(puzzleString[i]) + 1 BEFORE"
+      );
+
+      if (newPuzzleStringAfterAdding[i] == parseInt(puzzleString[i]) + 1) {
+        puzzleString = newPuzzleStringAfterAdding;
+        console.log(puzzleString, "<= puzzleString after if condition");
+      }
+
+      // Only handles the .'s
+      if (puzzleString[i].indexOf(".") !== -1) {
+        for (let j = 1; j < 10; j++) {
+          froArray = this.filterRow(replaceAt(puzzleString, i, j));
+          fcArray = this.filterColumn(replaceAt(puzzleString, i, j));
+          freArray = this.filterRegion(replaceAt(puzzleString, i, j));
+
+          if (froArray && fcArray && freArray) {
+            puzzleString = replaceAt(puzzleString, i, j);
+            console.log(puzzleString, "<= puzzleString");
+            break;
+          }
+
+          // above this works. Now we are working out if none of the nubers work we want to go back
+          //to the previous index with a . in original array and add that nuber by 1 and see if that string works. If not add one again and so on.
+          else if (j == 9) {
+            // Go back to the previous . index and add that number by one.
+            // console.log(puzzleString, "puzzleString in else ");
+            console.log(
+              parseInt(puzzleString[i - 1]) + 1,
+              "<= parseInt(puzzleString[i-1]) + 1"
+            );
+
+            previousIndexAddOne = parseInt(puzzleString[i - 1]) + 1;
+
+            if (previousIndexAddOne !== 10 && previousIndexAddOne) {
+              newPuzzleStringAfterAdding = replaceAt(
+                puzzleString,
+                i - 1,
+                previousIndexAddOne
+              );
+
+              console.log(
+                newPuzzleStringAfterAdding,
+                "<= newPuzzleStringAfterAdding"
+              );
+
+              i -= 2;
+              break;
+            } else if (previousIndexAddOne == 10) {
+              // reset puzzle string and newPuzzleStringAfterAdding to string before
+
+              puzzleString =
+                puzzleString.slice(0, i - 2) +
+                originalString.slice(i - 2, originalString.length);
+
+              puzzleString = replaceAt(
+                puzzleString,
+                i - 2,
+                puzzleString[i - 2] + 1
+              );
+
+              console.log(
+                puzzleString,
+                "<= puzzleString with slices and replacing weird index"
+              );
+              // i -= 3;
+              break;
+            }
+          }
+        }
+      }
+    }
+    // console.log(this.filterRow(newPuzzleString), "<= Outside of loop");
+  }
 }
 
 module.exports = SudokuSolver;

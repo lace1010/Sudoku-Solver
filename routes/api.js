@@ -42,7 +42,7 @@ module.exports = (app) => {
     else console.log("correct length and characters");
 
     // Create arrays with all forms of sudoku needed.
-    let filteredRowArray = solver.filterColumn(puzzle);
+    let filteredRowArray = solver.filterRow(puzzle);
     if (!filteredRowArray) {
       return res.json({ error: "Puzzle cannot be solved" });
     } else console.log("correct rows");
@@ -60,13 +60,44 @@ module.exports = (app) => {
 
     /* 
     
-    *** SIMPLY FILTERING THE STRING INTO CERTAIN ARRAYS *** 
+    *** SIMPLY FILTERING THE STRING INTO row, column  and region ARRAYS *** 
     
     */
-    console.log(filteredRowArray, "<=filteredRowArray");
-    console.log(filteredColumnArray, "<=filteredColumnArray");
-    console.log(filteredRegionArray, "<=filteredRegionArray");
 
+    let row = {
+      A: filteredRowArray[0],
+      B: filteredRowArray[1],
+      C: filteredRowArray[2],
+      D: filteredRowArray[3],
+      E: filteredRowArray[4],
+      F: filteredRowArray[5],
+      G: filteredRowArray[6],
+      H: filteredRowArray[7],
+      I: filteredRowArray[8],
+    };
+    let column = {
+      1: filteredColumnArray[0],
+      2: filteredColumnArray[1],
+      3: filteredColumnArray[2],
+      4: filteredColumnArray[3],
+      5: filteredColumnArray[4],
+      6: filteredColumnArray[5],
+      7: filteredColumnArray[6],
+      8: filteredColumnArray[7],
+      9: filteredColumnArray[8],
+    };
+
+    // console.log(row.A, "<= row.A");
+    // console.log(row.B, "<= row.B");
+    // console.log(row.C, "<= row.C");
+    // console.log(filteredRowArray, "<=filteredRowArray");
+    // console.log(column[1], "<= column.A");
+    // console.log(column[2], "<= column.B");
+    // console.log(column[3], "<= column.C");
+    // console.log(filteredColumnArray, "<=filteredColumnArray");
+    // console.log(filteredRegionArray, "<=filteredRegionArray");
+
+    let checkRow = solver.checkRowPlacement(puzzle, row.A, column[1], 2);
     let solve = solver.solve(puzzle);
   });
 };
