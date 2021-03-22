@@ -126,14 +126,13 @@ class SudokuSolver {
 
     if (puzzleString.indexOf(".") == -1) {
       console.log("solved bish");
-      console.log(puzzleString, "<= after all the mess");
       return puzzleString;
     } else {
       // dance is a label for the outer for loop so when we call break dance; in the nested loop it breaks out of both loops
 
       dance: for (let i = 0; i < puzzleString.length; i++) {
-        console.log(i, "index before conditions BEFORE");
-        console.log(puzzleString, "puzzleString before condition BEFORE");
+        // console.log(i, "index before conditions BEFORE");
+        // console.log(puzzleString, "puzzleString before condition BEFORE");
         // console.log(
         //   newPuzzleStringAfterAdding[i],
         //   "<= newPuzzleStringAfterAdding[i] BEFORE"
@@ -161,7 +160,7 @@ class SudokuSolver {
             if (froArray && fcArray && freArray) {
               puzzleString = replaceAt(puzzleString, i, j);
               console.log(puzzleString, "<= puzzleString");
-              break;
+              break dance;
             }
 
             // above this works. Now we are working out if none of the nubers work we want to go back
@@ -214,14 +213,12 @@ class SudokuSolver {
         }
       }
     }
-
-    this.recursiveSolve(puzzleString, originalString);
+    return this.recursiveSolve(puzzleString, originalString);
   }
 
   solve(puzzleString1) {
-    let solvedString = this.recursiveSolve(puzzleString1, puzzleString1);
-    console.log(solvedString, "<= solvedString in sudoku-solver.js");
-    return solvedString;
+    return this.recursiveSolve(puzzleString1, puzzleString1);
+    // console.log(solvedString, "<= solvedString in sudoku-solver.js");
   }
 }
 

@@ -99,6 +99,11 @@ module.exports = (app) => {
 
     let checkRow = solver.checkRowPlacement(puzzle, row.A, column[1], 2);
     let solvedString = solver.solve(puzzle, puzzle);
-    // console.log(solvedString, "<= solvedString");
+    console.log(solvedString, "<= solvedString api.js");
+
+    if (solvedString.indexOf(".") == -1) {
+      console.log("Hello");
+      return res.json({ solution: solvedString });
+    }
   });
 };
