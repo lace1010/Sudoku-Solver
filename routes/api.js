@@ -98,6 +98,7 @@ module.exports = (app) => {
     // console.log(filteredRegionArray, "<=filteredRegionArray");
 
     let checkRow = solver.checkRowPlacement(puzzle, row.A, column[1], 2);
-    let solve = solver.solve(puzzle);
+    let solvedString = solver.solve(puzzle, puzzle);
+    // console.log(solvedString, "<= solvedString");
   });
 };
