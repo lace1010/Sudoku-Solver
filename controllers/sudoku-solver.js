@@ -106,7 +106,6 @@ class SudokuSolver {
     let board = this.stringToBoard(puzzleString);
     // set col and row to the array value thus col has to go back one for index starts at 1 and row we must convert letter to array index for column
     col = col - 1;
-    console.log(col, "<= col");
     if (row == "a" || row == "A") {
       row = 0;
     } else if (row == "b" || row == "B") {
@@ -126,7 +125,6 @@ class SudokuSolver {
     } else if (row == "i" || row == "I") {
       row = 8;
     }
-    console.log(row, "<= row");
     // logic that will handle everything
     if (board[row][col] == value) {
       return "input is same as value in coordinate";
@@ -152,17 +150,17 @@ class SudokuSolver {
       fcArray = this.filterColumn(replaceAt(updatedString, index, value));
       freArray = this.filterRegion(replaceAt(updatedString, index, value));
 
-      if (!froArray) {
+      if (froArray == "invalid rows") {
         conflictArray.push("row");
       }
-      if (!fcArray) {
+      if (fcArray == "invalid columns") {
         conflictArray.push("column");
       }
-      if (!freArray) {
+      if (freArray == "invalid regions") {
         conflictArray.push("region");
       }
       if (conflictArray.length > 0) {
-        return { valid: false, column: conflictArray };
+        return { valid: false, conflict: conflictArray };
       } else return { valid: true };
     }
   }

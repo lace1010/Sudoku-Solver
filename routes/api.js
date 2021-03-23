@@ -55,25 +55,23 @@ module.exports = (app) => {
     // If validateResponse has an error value then respond with res.json()
     if (validateResponse !== "correct puzzle") {
       return res.json(validateResponse);
-    } else console.log("correct length and characters");
+    }
 
     // Create arrays with all forms of sudoku needed.
     let filteredRowArray = solver.filterRow(puzzle);
     if (filteredRowArray == "invalid rows") {
       return res.json({ error: "Puzzle cannot be solved" });
-    } else console.log("correct rows");
-
+    }
     let filteredColumnArray = solver.filterColumn(puzzle);
     if (filteredColumnArray == "invalid columns") {
       return res.json({ error: "Puzzle cannot be solved" });
-    } else console.log("correct columns");
+    }
 
     // Check region placement
     let filteredRegionArray = solver.filterRegion(puzzle);
     if (filteredRegionArray == "invalid regions") {
       return res.json({ error: "Puzzle cannot be solved" });
-    } else console.log("correct regions");
-
+    }
     // set up array board from puzzle string given
     let board = solver.stringToBoard(puzzle);
     // solve board.  this changes board so solvedString uses a solved board
@@ -81,10 +79,7 @@ module.exports = (app) => {
     let solvedString = solver.boardToString(board);
 
     if (solvedString.indexOf(".") == -1) {
-      console.log(solvedString, "<= solved board as a string");
       return res.json({ solution: solvedString });
-    } else console.log("the puzzle given is unsolveable");
-
-    //let solvedStringFromMine = solver.solve(puzzle, puzzle);
+    } else return res.json({ error: "Puzzle cannot be solved" });
   });
 };
