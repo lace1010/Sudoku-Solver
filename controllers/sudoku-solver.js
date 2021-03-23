@@ -122,11 +122,10 @@ class SudokuSolver {
     console.log(row, "<= row");
     console.log(board[1][1]);
     console.log(board[row][col], "<= board[row][col]");
-    if (board[row][col] == ".") {
-      // place the value to be inputted here
-    }
     if (board[row][col] == value) {
-      return true;
+      return "input is same as value in coordinate";
+    } else if (board[row][col] !== "." && board[row][col] !== value) {
+      return "can't replace number";
     }
   }
 
