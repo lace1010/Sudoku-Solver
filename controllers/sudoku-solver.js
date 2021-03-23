@@ -15,7 +15,6 @@ class SudokuSolver {
     let doubleNumberRegex = /([1-9]).*\1/;
     // split string up into 9 rows using regex and match
     let puzzleArrayInRows = puzzleString.match(/.{9}/g);
-
     let filteredRowArray = puzzleArrayInRows.filter((i) => {
       return !doubleNumberRegex.test(i);
     });
@@ -125,8 +124,7 @@ class SudokuSolver {
       row = 8;
     }
     console.log(row, "<= row");
-    console.log(board[1][1]);
-    console.log(board[row][col], "<= board[row][col]");
+    // logic that will handle everything
     if (board[row][col] == value) {
       return "input is same as value in coordinate";
     } else if (board[row][col] !== "." && board[row][col] !== value) {
@@ -160,7 +158,7 @@ class SudokuSolver {
       if (!freArray) {
         conflictArray.push("region");
       }
-      if (conflictArray.length > 1) {
+      if (conflictArray.length > 0) {
         return { valid: false, column: conflictArray };
       } else return { valid: true };
     }
