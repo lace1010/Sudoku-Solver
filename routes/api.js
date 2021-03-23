@@ -12,12 +12,12 @@ module.exports = (app) => {
     let coordinate = req.body.coordinate;
     let value = req.body.value;
     let validateResponse = solver.validate(req.body.puzzle);
-    let checkPlacement = solver.checkPlacement(
-      puzzle,
-      coordinate[0],
-      coordinate[1],
-      value
-    );
+    // let checkPlacement = solver.checkPlacement(
+    //   puzzle,
+    //   coordinate[0],
+    //   coordinate[1],
+    //   value
+    // );
 
     // // If validateResponse has an error value then respond with res.json()
     if (validateResponse) return res.json(validateResponse);
@@ -35,9 +35,9 @@ module.exports = (app) => {
     }
     // If all things given are valid and
     // CHECK ROW COLUMN AND REGION PLACEMENT TO SEE IF A VALUE CAN GO HERE
-    else if (checkPlacement) {
-      return res.json({ valid: checkPlacement });
-    } else res.json({ puzzle: puzzle, coordinate: coordinate, value: value });
+    // else if (checkPlacement) {
+    //   return res.json({ valid: true });
+    // } else res.json({ coordinate: coordinate, value: value });
   });
 
   app.route("/api/solve").post((req, res) => {
