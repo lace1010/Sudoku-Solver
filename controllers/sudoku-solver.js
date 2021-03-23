@@ -142,7 +142,7 @@ class SudokuSolver {
       let freArray = [];
       let index = 0;
       // set index based off row and column to replace value in string so we can check the new value through the filter
-      if ((row = 0)) {
+      if (row == 0) {
         index = col;
       } else {
         index = row * 9 + col;
@@ -151,9 +151,6 @@ class SudokuSolver {
       fcArray = this.filterColumn(replaceAt(updatedString, index, value));
       freArray = this.filterRegion(replaceAt(updatedString, index, value));
 
-      if (froArray && fcArray && freArray) {
-        return { valid: true };
-      }
       if (!froArray) {
         conflictArray.push("row");
       }
@@ -163,7 +160,9 @@ class SudokuSolver {
       if (!freArray) {
         conflictArray.push("region");
       }
-      return { valid: false, column: conflictArray };
+      if (conflictArray.length > 1) {
+        return { valid: false, column: conflictArray };
+      } else return { valid: true };
     }
   }
 
