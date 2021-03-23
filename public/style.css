@@ -1,19 +1,73 @@
+:root {
+  --secondary-color: rgb(201, 201, 201);
+  --main-dark: #1e3c72;
+  --main-light: #2a5298;
+}
+
+body {
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  color: var(--secondary-color);
+  height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#header {
+  text-align: center;
+}
+
 code {
+  display: block;
   background: #d0d0d5;
+  color: var(--main-dark);
+  word-wrap: break-word;
+  margin: 1rem 0 1rem 0;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
 }
 
 .container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .form-container {
-  max-width: 95%;
-  align-self: flex-start;
+  max-width: 20rem;
+  font-size: large;
 }
 
 textarea {
+  border-radius: 0.5rem;
+  font-size: medium;
+  margin-top: 0.8rem;
+  padding: 0.5rem;
   width: 100%;
+}
+
+.buttons {
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  padding: 0.4rem;
+  color: var(--main-dark);
+}
+
+.buttons:hover {
+  background-color: var(--main-dark);
+  filter: brightness(80%);
+  color: white;
+}
+
+input {
+  margin: 0.8rem 0 0.8rem 0;
+  padding: 0.2rem 0.2rem 0.2rem 0.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: medium;
 }
 
 #user-stories {
@@ -54,19 +108,19 @@ td {
 }
 
 .yAxisLegend tr td {
-  border: 1px solid rgba(0,0,0,0);
+  border: 1px solid rgba(0, 0, 0, 0);
   width: 2em;
   height: 1.95em;
 }
 
 .xAxisLegend {
-  border: 3px solid rgba(0,0,0,0);
+  border: 3px solid rgba(0, 0, 0, 0);
   border-spacing: 0;
   font-weight: bold;
 }
 
 .xAxisLegend tr td {
-  border: 1px solid rgba(0,0,0,0);
+  border: 1px solid rgba(0, 0, 0, 0);
   width: 2em;
   height: 2em;
   text-align: center;
@@ -75,21 +129,55 @@ td {
 }
 
 .xAxisLegend tr td:nth-of-type(3n) {
-  border-right: 3px solid rgba(0,0,0,0);
+  border-right: 3px solid rgba(0, 0, 0, 0);
 }
 
 .sudoku-input {
-  border: 1px solid black;
+  border: 1px solid var(--secondary-color);
   width: 2em;
   height: 2em;
   text-align: center;
 }
 
-.C1, .C2, .C3, .C4, .C5, .C6, .C7, .C8, .C9, .F1, .F2, .F3, .F4, .F5, .F6, .F7, .F8, .F9 {
+.C1,
+.C2,
+.C3,
+.C4,
+.C5,
+.C6,
+.C7,
+.C8,
+.C9,
+.F1,
+.F2,
+.F3,
+.F4,
+.F5,
+.F6,
+.F7,
+.F8,
+.F9 {
   border-bottom: 3px solid;
 }
 
-.A3, .B3, .C3, .D3, .E3, .F3, .G3, .H3, .I3, .A6, .B6, .C6, .D6, .E6, .F6, .G6, .H6, .I6 {
+.A3,
+.B3,
+.C3,
+.D3,
+.E3,
+.F3,
+.G3,
+.H3,
+.I3,
+.A6,
+.B6,
+.C6,
+.D6,
+.E6,
+.F6,
+.G6,
+.H6,
+.I6 {
   border-right: 3px solid;
 }
 
@@ -101,4 +189,18 @@ td {
   .form-container {
     align-self: center;
   }
+}
+
+footer {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+#footerLink {
+  color: navy;
+  text-decoration: none;
+}
+
+#footerLink:hover {
+  color: var(--secondary-color);
 }
