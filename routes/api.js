@@ -12,7 +12,6 @@ module.exports = (app) => {
     let coordinate = req.body.coordinate;
     let value = req.body.value;
     let validateResponse = solver.validate(req.body.puzzle);
-
     let checkPlacement = solver.checkPlacement(
       puzzle,
       coordinate[0],

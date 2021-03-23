@@ -122,6 +122,9 @@ class SudokuSolver {
     console.log(row, "<= row");
     console.log(board[1][1]);
     console.log(board[row][col], "<= board[row][col]");
+    if (board[row][col] == ".") {
+      // place the value to be inputted here
+    }
     if (board[row][col] == value) {
       return true;
     }
