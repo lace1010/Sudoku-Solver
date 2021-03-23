@@ -95,19 +95,44 @@ class SudokuSolver {
     // Return the filtered array and handle it with condition statement in api.js in route("/api/solve")
     if (filteredRegionArray.length == 9) return filteredRegionArray;
   }
-
-  checkRowPlacement(puzzleString, row, column, value) {
-    console.log(puzzleString);
+  checkPlacement(puzzleString, row, col, value) {
+    let board = this.stringToBoard(puzzleString);
+    // set col and row to the array value thus col has to go back one for index starts at 1 and row we must convert letter to array index for column
+    col = col - 1;
+    console.log(col, "<= col");
+    if (row == "a" || row == "A") {
+      row = 0;
+    } else if (row == "b" || row == "B") {
+      row = 1;
+    } else if (row == "c" || row == "C") {
+      row = 2;
+    } else if (row == "d" || row == "D") {
+      row = 3;
+    } else if (row == "e" || row == "E") {
+      row = 4;
+    } else if (row == "f" || row == "F") {
+      row = 5;
+    } else if (row == "g" || row == "G") {
+      row = 6;
+    } else if (row == "h" || row == "H") {
+      row = 7;
+    } else if (row == "i" || row == "I") {
+      row = 8;
+    }
     console.log(row, "<= row");
-    console.log(row[2], "<= row[2]");
-    console.log(column, "<= column");
-    console.log(column[2], "<= column[2]");
-    console.log(value, "<= value");
+    console.log(board[1][1]);
+    console.log(board[row][col], "<= board[row][col]");
+    if (board[row][col] == value) {
+      return true;
+    }
   }
+
+  checkRowPlacement(puzzleString, row, column, value) {}
 
   checkColPlacement(puzzleString, row, column, value) {}
 
   checkRegionPlacement(puzzleString, row, column, value) {}
+
   stringToBoard(puzzleString) {
     // split string up into 9 rows using regex and match
     let puzzleArrayInRows = puzzleString.match(/.{9}/g);
