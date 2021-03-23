@@ -64,28 +64,40 @@ module.exports = (app) => {
     
     */
 
-    let row = {
-      A: filteredRowArray[0],
-      B: filteredRowArray[1],
-      C: filteredRowArray[2],
-      D: filteredRowArray[3],
-      E: filteredRowArray[4],
-      F: filteredRowArray[5],
-      G: filteredRowArray[6],
-      H: filteredRowArray[7],
-      I: filteredRowArray[8],
-    };
-    let column = {
-      1: filteredColumnArray[0],
-      2: filteredColumnArray[1],
-      3: filteredColumnArray[2],
-      4: filteredColumnArray[3],
-      5: filteredColumnArray[4],
-      6: filteredColumnArray[5],
-      7: filteredColumnArray[6],
-      8: filteredColumnArray[7],
-      9: filteredColumnArray[8],
-    };
+    let board = solver.stringToBoard(puzzle);
+    console.log(board, "<= board");
+
+    let solved = solver.sudokuSolver(board);
+    console.log(solved, "<= cheated data");
+
+    let solvedString = solver.boardToString(board);
+    console.log(solvedString, "<= string from board");
+
+    if (solvedString.indexOf(".") == -1) {
+      return res.json({ solution: solvedString });
+    }
+    // let row = {
+    //   A: filteredRowArray[0],
+    //   B: filteredRowArray[1],
+    //   C: filteredRowArray[2],
+    //   D: filteredRowArray[3],
+    //   E: filteredRowArray[4],
+    //   F: filteredRowArray[5],
+    //   G: filteredRowArray[6],
+    //   H: filteredRowArray[7],
+    //   I: filteredRowArray[8],
+    // };
+    // let column = {
+    //   1: filteredColumnArray[0],
+    //   2: filteredColumnArray[1],
+    //   3: filteredColumnArray[2],
+    //   4: filteredColumnArray[3],
+    //   5: filteredColumnArray[4],
+    //   6: filteredColumnArray[5],
+    //   7: filteredColumnArray[6],
+    //   8: filteredColumnArray[7],
+    //   9: filteredColumnArray[8],
+    // };
 
     // console.log(row.A, "<= row.A");
     // console.log(row.B, "<= row.B");
@@ -98,12 +110,6 @@ module.exports = (app) => {
     // console.log(filteredRegionArray, "<=filteredRegionArray");
 
     let checkRow = solver.checkRowPlacement(puzzle, row.A, column[1], 2);
-    let solvedString = solver.solve(puzzle, puzzle);
-    console.log(solvedString, "<= solvedString api.js");
-
-    if (solvedString.indexOf(".") == -1) {
-      console.log("Hello");
-      return res.json({ solution: solvedString });
-    }
+    //let solvedStringFromMine = solver.solve(puzzle, puzzle);
   });
 };
