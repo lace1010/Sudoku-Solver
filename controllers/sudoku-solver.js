@@ -192,7 +192,7 @@ class SudokuSolver {
         if (data[i][j] == ".") {
           for (let k = 1; k <= 9; k++) {
             if (this.isValid(data, i, j, k)) {
-              data[i][j] = `${k}`;
+              data[i][j] = k;
               if (this.sudokuSolver(data)) {
                 return true;
               } else {
@@ -206,120 +206,6 @@ class SudokuSolver {
     }
     return true;
   }
-  // recursiveSolve(puzzleString, original) {
-  //   // Set up a function that replaces the . string with a value that can fill in sudoku spot correctly
-  //   const replaceAt = (string, index, replacement) => {
-  //     return (
-  //       string.substring(0, index) + replacement + string.substring(index + 1)
-  //     );
-  //   };
-
-  //   let originalString = original;
-  //   let newPuzzleStringAfterAdding = [];
-  //   let froArray = [];
-  //   let fcArray = [];
-  //   let freArray = [];
-  //   let previousIndexAddOne;
-
-  //   if (puzzleString.indexOf(".") == -1) {
-  //     // console.log("solved bish");
-  //     // console.log(puzzleString, "<= after all the mess");
-  //     return puzzleString;
-  //   } else {
-  //     // dance is a label for the outer for loop so when we call break dance; in the nested loop it breaks out of both loops
-
-  //     dance: for (let i = 0; i < puzzleString.length; i++) {
-  //       // console.log(i, "index before conditions BEFORE");
-  //       // console.log(puzzleString, "puzzleString before condition BEFORE");
-  //       // console.log(
-  //       //   newPuzzleStringAfterAdding[i],
-  //       //   "<= newPuzzleStringAfterAdding[i] BEFORE"
-  //       // );
-  //       // console.log(
-  //       //   parseInt(puzzleString[i]) + 1,
-  //       //   "parseInt(puzzleString[i]) + 1 BEFORE"
-  //       // );
-
-  //       if (newPuzzleStringAfterAdding[i] == parseInt(puzzleString[i]) + 1) {
-  //         puzzleString = newPuzzleStringAfterAdding;
-  //         // console.log(puzzleString, "<= puzzleString after if condition");
-  //       }
-
-  //       // Only handles the .'s
-  //       if (
-  //         originalString[i].indexOf(".") !== -1 &&
-  //         puzzleString[i].indexOf(".") !== -1
-  //       ) {
-  //         for (let j = 1; j < 10; j++) {
-  //           froArray = this.filterRow(replaceAt(puzzleString, i, j));
-  //           fcArray = this.filterColumn(replaceAt(puzzleString, i, j));
-  //           freArray = this.filterRegion(replaceAt(puzzleString, i, j));
-
-  //           if (froArray && fcArray && freArray) {
-  //             // puzzleString = replaceAt(puzzleString, i, j);
-  //             // console.log(puzzleString, "<= puzzleString");
-  //             break;
-  //           }
-
-  //           // above this works. Now we are working out if none of the nubers work we want to go back
-  //           //to the previous index with a . in original array and add that nuber by 1 and see if that string works. If not add one again and so on.
-  //           else if (j == 9) {
-  //             // Go back to the previous . index and add that number by one.
-  //             // console.log(puzzleString, "puzzleString in else ");
-  //             // console.log(
-  //             //   parseInt(puzzleString[i - 1]) + 1,
-  //             //   "<= parseInt(puzzleString[i-1]) + 1"
-  //             // );
-
-  //             previousIndexAddOne = parseInt(puzzleString[i - 1]) + 1;
-
-  //             if (previousIndexAddOne !== 10 && previousIndexAddOne) {
-  //               newPuzzleStringAfterAdding = replaceAt(
-  //                 puzzleString,
-  //                 i - 1,
-  //                 previousIndexAddOne
-  //               );
-
-  //               // console.log(
-  //               //   newPuzzleStringAfterAdding,
-  //               //   "<= newPuzzleStringAfterAdding"
-  //               // );
-
-  //               i -= 2;
-  //               break;
-  //             } else if (previousIndexAddOne == 10) {
-  //               // reset puzzle string and newPuzzleStringAfterAdding to string before
-
-  //               puzzleString =
-  //                 puzzleString.slice(0, i - 1) +
-  //                 originalString.slice(i - 1, originalString.length);
-
-  //               puzzleString = replaceAt(
-  //                 puzzleString,
-  //                 i - 2,
-  //                 parseInt(puzzleString[i - 2]) + 1
-  //               );
-
-  //               // console.log(
-  //               //   puzzleString,
-  //               //   "<= puzzleString with slices and replacing weird index"
-  //               // );
-  //               break dance; // Breaks out of both loops
-  //             }
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-
-  //   return this.recursiveSolve(puzzleString, originalString);
-  // }
-
-  // solve(puzzleString1) {
-  //   let solvedString = this.recursiveSolve(puzzleString1, puzzleString1);
-  //   console.log(solvedString, "<= solvedString in sudoku-solver.js");
-  //   return solvedString;
-  // }
 }
 
 module.exports = SudokuSolver;
