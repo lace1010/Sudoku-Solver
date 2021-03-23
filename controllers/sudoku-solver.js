@@ -8,7 +8,7 @@ class SudokuSolver {
       return {
         error: "Expected puzzle to be 81 characters long",
       };
-    }
+    } else return "correct puzzle";
   }
 
   filterRow(puzzleString) {
@@ -19,6 +19,7 @@ class SudokuSolver {
       return !doubleNumberRegex.test(i);
     });
     if (filteredRowArray.length == 9) return filteredRowArray;
+    else return "invalid rows";
   }
 
   filterColumn(puzzleString) {
@@ -41,6 +42,7 @@ class SudokuSolver {
     });
 
     if (filteredColumnArray.length == 9) return filteredColumnArray;
+    else return "invalid columns";
   }
 
   filterRegion(puzzleString) {
@@ -93,6 +95,7 @@ class SudokuSolver {
 
     // Return the filtered array and handle it with condition statement in api.js in route("/api/solve")
     if (filteredRegionArray.length == 9) return filteredRegionArray;
+    else return "invalid regions";
   }
   checkPlacement(puzzleString, row, col, value) {
     const replaceAt = (string, index, replacement) => {

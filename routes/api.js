@@ -12,10 +12,11 @@ module.exports = (app) => {
     let coordinate = req.body.coordinate;
     let value = req.body.value;
     let validateResponse = solver.validate(req.body.puzzle);
-    let object = { puzzle: puzzle, coordinate: coordinate, value: value };
+    let object = { puzzle: puzzle, coordinate: coordinate, value: value }; // need this to pass a test
 
     // // If validateResponse has an error value then respond with res.json()
-    if (validateResponse) return res.json(validateResponse);
+    if (validateResponse !== "correct puzzle")
+      return res.json(validateResponse);
     // If puzzle coordinate or value is not filled out
     if (!puzzle || !coordinate || !value) {
       return res.json({ error: "Required field(s) missing" });
@@ -52,23 +53,24 @@ module.exports = (app) => {
 
     let validateResponse = solver.validate(puzzle);
     // If validateResponse has an error value then respond with res.json()
-    if (validateResponse) return res.json(validateResponse);
-    else console.log("correct length and characters");
+    if (validateResponse !== "correct puzzle") {
+      return res.json(validateResponse);
+    } else console.log("correct length and characters");
 
     // Create arrays with all forms of sudoku needed.
     let filteredRowArray = solver.filterRow(puzzle);
-    if (!filteredRowArray) {
+    if (filteredRowArray == "invalid rows") {
       return res.json({ error: "Puzzle cannot be solved" });
     } else console.log("correct rows");
 
     let filteredColumnArray = solver.filterColumn(puzzle);
-    if (!filteredColumnArray) {
+    if (filteredColumnArray == "invalid columns") {
       return res.json({ error: "Puzzle cannot be solved" });
     } else console.log("correct columns");
 
     // Check region placement
     let filteredRegionArray = solver.filterRegion(puzzle);
-    if (!filteredRegionArray) {
+    if (filteredRegionArray == "invalid regions") {
       return res.json({ error: "Puzzle cannot be solved" });
     } else console.log("correct regions");
 
