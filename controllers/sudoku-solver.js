@@ -96,6 +96,11 @@ class SudokuSolver {
     if (filteredRegionArray.length == 9) return filteredRegionArray;
   }
   checkPlacement(puzzleString, row, col, value) {
+    const replaceAt = (string, index, replacement) => {
+      return (
+        string.substring(0, index) + replacement + string.substring(index + 1)
+      );
+    };
     let board = this.stringToBoard(puzzleString);
     // set col and row to the array value thus col has to go back one for index starts at 1 and row we must convert letter to array index for column
     col = col - 1;
@@ -126,14 +131,41 @@ class SudokuSolver {
       return "input is same as value in coordinate";
     } else if (board[row][col] !== "." && board[row][col] !== value) {
       return "can't replace number";
+    } else if (board[row][col] == ".") {
+      // change the . to value inputted by user
+      board[row][col] = value;
+      // have new board be transferred to string so it can go through filter logic
+      let updatedString = this.boardToString(board);
+      let conflictArray = [];
+      let froArray = [];
+      let fcArray = [];
+      let freArray = [];
+      let index = 0;
+      // set index based off row and column to replace value in string so we can check the new value through the filter
+      if ((row = 0)) {
+        index = col;
+      } else {
+        index = row * 9 + col;
+      }
+      froArray = this.filterRow(replaceAt(updatedString, index, value));
+      fcArray = this.filterColumn(replaceAt(updatedString, index, value));
+      freArray = this.filterRegion(replaceAt(updatedString, index, value));
+
+      if (froArray && fcArray && freArray) {
+        return { valid: true };
+      }
+      if (!froArray) {
+        conflictArray.push("row");
+      }
+      if (!fcArray) {
+        conflictArray.push("column");
+      }
+      if (!freArray) {
+        conflictArray.push("region");
+      }
+      return { valid: false, column: conflictArray };
     }
   }
-
-  checkRowPlacement(puzzleString, row, column, value) {}
-
-  checkColPlacement(puzzleString, row, column, value) {}
-
-  checkRegionPlacement(puzzleString, row, column, value) {}
 
   stringToBoard(puzzleString) {
     // split string up into 9 rows using regex and match

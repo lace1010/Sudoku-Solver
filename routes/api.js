@@ -12,6 +12,7 @@ module.exports = (app) => {
     let coordinate = req.body.coordinate;
     let value = req.body.value;
     let validateResponse = solver.validate(req.body.puzzle);
+    let object = { puzzle: puzzle, coordinate: coordinate, value: value };
 
     // // If validateResponse has an error value then respond with res.json()
     if (validateResponse) return res.json(validateResponse);
@@ -39,8 +40,8 @@ module.exports = (app) => {
       if (checkPlacement == "input is same as value in coordinate") {
         return res.json({ valid: true });
       } else if (checkPlacement == "can't replace number") {
-        return res.json("can't replace number");
-      } else res.json({ coordinate: coordinate, value: value });
+        return res.json(checkPlacement);
+      } else res.json(checkPlacement);
     }
   });
 
